@@ -1,0 +1,68 @@
+import { ItemService } from "../../services/items/itemsService.js";
+import CustomError from "../../utils/custom-error/customError.js";
+import ERROR_MESSAGES from "../../utils/error-messages/errorMessages.js";
+
+const getUserId = (req) => {
+  const userId = req.user?.id ?? req.user?.sub;
+  if (!userId) {
+    throw new CustomError(ERROR_MESSAGES.AUTHENTICATION_REQUIRED, 401);
+  }
+  return userId;
+};
+
+export const ItemController = {
+  async getAllLostItems(req, res, next) {
+    try {
+      const items = await ItemService.getAllLostItems();
+      res.status(200).json(items);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async getLostItemById(req, res, next) {
+    try {
+      const item = await ItemService.getLostItemById(req.params.id);
+      res.status(200).json(item);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async createLostItem(req, res, next) {
+    try {
+      const item = await ItemService.createLostItem({
+        ...req.body,
+        userId: getUserId(req),
+      });
+      res.status(201).json(item);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async updateLostItem(req, res, next) {
+    try {
+      const item = await ItemService.updateLostItem(
+        req.params.id,
+        getUserId(req),
+        req.body,
+      );
+      res.status(200).json(item);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async deleteLostItem(req, res, next) {
+    try {
+      const item = await ItemService.deleteLostItem(
+        req.params.id,
+        getUserId(req),
+      );
+      res.status(200).json(item);
+    } catch (error) {
+      next(error);
+    }
+  },
+};
