@@ -20,6 +20,27 @@ export const ItemController = {
     }
   },
 
+  async getMyLostItems(req, res, next) {
+    try {
+      const items = await ItemService.getMyLostItems(getUserId(req));
+      res.status(200).json(items);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  async getLostItemsPage(req, res, next) {
+    try {
+      const page = await ItemService.getLostItemsPage(
+        req.query.offset ?? 0,
+        req.query.limit ?? 12,
+      );
+      res.status(200).json(page);
+    } catch (error) {
+      next(error);
+    }
+  },
+
   async getLostItemById(req, res, next) {
     try {
       const item = await ItemService.getLostItemById(req.params.id);

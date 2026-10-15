@@ -3,10 +3,50 @@ import db from "../../config/db.js";
 export const itemModel = {
   async getAllLostItems() {
     const result = await db.query(
-      "SELECT * FROM items WHERE status = $1 ORDER BY created_at DESC",
+      `SELECT items.*, users.full_name AS owner_name
+       FROM items
+       LEFT JOIN users ON users.id = items.user_id
+       WHERE items.status = $1
+       ORDER BY items.created_at DESC, items.id DESC`,
       ["lost"],
     );
     return result.rows;
+  },
+
+  async getMyLostItems(userId) {
+    const result = await db.query(
+      `SELECT items.*, users.full_name AS owner_name
+       FROM items
+       LEFT JOIN users ON users.id = items.user_id
+       WHERE items.user_id = $1
+       ORDER BY items.created_at DESC, items.id DESC`,
+      [userId],
+    );
+    return result.rows;
+  },
+
+  async getLostItemsPage(offset, limit) {
+    const [itemsResult, countResult] = await Promise.all([
+      db.query(
+        `SELECT items.*, users.full_name AS owner_name
+         FROM items
+         LEFT JOIN users ON users.id = items.user_id
+         WHERE items.status = $1
+         ORDER BY items.created_at DESC, items.id DESC
+         LIMIT $2 OFFSET $3`,
+        ["lost", limit, offset],
+      ),
+      db.query("SELECT COUNT(*) FROM items WHERE status = $1", ["lost"]),
+    ]);
+    const total = Number(countResult.rows[0].count);
+
+    return {
+      items: itemsResult.rows,
+      total,
+      offset,
+      limit,
+      hasMore: offset + itemsResult.rows.length < total,
+    };
   },
 
   async getLostItemById(itemId) {

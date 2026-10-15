@@ -22,6 +22,27 @@ export const ItemService = {
     return itemModel.getAllLostItems();
   },
 
+  async getMyLostItems(userId) {
+    return itemModel.getMyLostItems(requireId(userId));
+  },
+
+  async getLostItemsPage(offsetValue, limitValue) {
+    const offset = Number(offsetValue);
+    const limit = Number(limitValue);
+
+    if (
+      !Number.isInteger(offset) ||
+      offset < 0 ||
+      !Number.isInteger(limit) ||
+      limit < 1 ||
+      limit > 50
+    ) {
+      throw new CustomError(ERROR_MESSAGES.VALIDATION_FAILED, 400);
+    }
+
+    return itemModel.getLostItemsPage(offset, limit);
+  },
+
   async getLostItemById(itemId) {
     const id = requireId(itemId);
     return requireItem(await itemModel.getLostItemById(id));
