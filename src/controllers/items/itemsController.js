@@ -1,14 +1,7 @@
 import { ItemService } from "../../services/items/itemsService.js";
 import CustomError from "../../utils/custom-error/customError.js";
 import ERROR_MESSAGES from "../../utils/error-messages/errorMessages.js";
-
-const getUserId = (req) => {
-  const userId = req.user?.id ?? req.user?.sub;
-  if (!userId) {
-    throw new CustomError(ERROR_MESSAGES.AUTHENTICATION_REQUIRED, 401);
-  }
-  return userId;
-};
+import { getUserId } from "../../utils/validators/validators.js";
 
 export const ItemController = {
   async getAllLostItems(req, res, next) {

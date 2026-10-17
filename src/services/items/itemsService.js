@@ -1,21 +1,7 @@
 import { itemModel } from "../../models/items/itemsModel.js";
 import CustomError from "../../utils/custom-error/customError.js";
 import ERROR_MESSAGES from "../../utils/error-messages/errorMessages.js";
-
-const requireId = (value) => {
-  const id = Number(value);
-  if (!Number.isInteger(id) || id < 1) {
-    throw new CustomError(ERROR_MESSAGES.VALIDATION_FAILED, 400);
-  }
-  return id;
-};
-
-const requireItem = (item) => {
-  if (!item) {
-    throw new CustomError(ERROR_MESSAGES.RESOURCE_NOT_FOUND, 404);
-  }
-  return item;
-};
+import { requireId, requireItem } from "../../utils/validators/validators.js";
 
 export const ItemService = {
   async getAllLostItems() {
