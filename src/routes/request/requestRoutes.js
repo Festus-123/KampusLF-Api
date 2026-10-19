@@ -5,11 +5,15 @@ import { authMiddleware } from "../../middlewares/auth/authMiddleware.js";
 const router = Router();
 
 router.get("/", RequestController.getAllRequests);
-router.get("/byUser", RequestController.getUserRequests);
-router.get("/:id", RequestController.getRequestsById)
+router.get("/byUser", authMiddleware, RequestController.getUserRequests);
+router.get("/byOwner", authMiddleware, RequestController.getItemOwnerRequests);
+router.get("/:id", RequestController.getRequestsById);
 
 router.use(authMiddleware);
 router.post("/", RequestController.creatRequest);
-router.delete("/:id", RequestController.deleteRequest)
+router.patch("/:id/status", RequestController.markRequestReclaimed);
+router.patch("/:id/owner-status", RequestController.updateOwnerRequestStatus);
+router.delete("/:id/owner", RequestController.denyRequest);
+router.delete("/:id", RequestController.deleteRequest);
 
 export default router;
