@@ -1,6 +1,4 @@
 import { ItemService } from "../../services/items/itemsService.js";
-import CustomError from "../../utils/custom-error/customError.js";
-import ERROR_MESSAGES from "../../utils/error-messages/errorMessages.js";
 import { getUserId } from "../../utils/validators/validators.js";
 
 export const ItemController = {
