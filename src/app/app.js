@@ -4,10 +4,10 @@ import cors from 'cors';
 import pinoHttp from 'pino-http';
 import rateLimit from 'express-rate-limit';
 
-import authRoutes from './routes/auth/authRoutes.js';
-import itemsRoutes from './routes/items/itemsRoutes.js';
-import requestRoutes from './routes/request/requestRoutes.js';
-import erroHandlerMiddleware from './middlewares/error/errorMiddleware.js';
+import authRoutes from '../routes/auth/authRoutes.js';
+import itemsRoutes from '../routes/items/itemsRoutes.js';
+import requestRoutes from '../routes/request/requestRoutes.js';
+import erroHandlerMiddleware from '../middlewares/error/errorMiddleware.js';
 
 const app = express();
 
