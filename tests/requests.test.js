@@ -91,7 +91,7 @@ describe("Requests endpoints", () => {
       email: "alex@example.com",
       phone: "12345678901",
       message: "I can identify the item.",
-      descriptions: ["A small blue notebook."],
+      descripts: ["A small blue notebook."],
     };
     const createdRequest = { id: 12, item_id: 5, user_id: 42 };
     RequestService.createRequest.mockResolvedValue(createdRequest);
@@ -119,7 +119,7 @@ describe("Requests endpoints", () => {
         email: "bad",
         phone: "123",
         message: "",
-        descriptions: [],
+        descripts: [],
       });
 
     expect(response.status).toBe(400);
