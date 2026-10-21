@@ -8,7 +8,7 @@ export const requestSchema = z.object({
     email: z.string().min(4, "must cntain a valid email syntaz").max(255),
     phone: z.string().min(11, "must be a valid number").max(11),
     message: z.string(),
-    description: z.array(z.string()),
+    descriptions: z.array(z.string()),
     createdAt: z.union([z.string().datetime({ offset: true }), z.date(), z.string()]),
     updatedAt: z.union([z.string().datetime({ offset: true }), z.date(), z.string()]),
 })
@@ -26,5 +26,5 @@ export const updateRequestSchema = z.object({
     email: z.string().min(4, "must cntain a valid email syntaz").max(255).optional(),
     phone: z.number().min(11, "must be a valid number").max(11).optional(),
     message: z.string().optional(),
-    description: z.string().optional(),
+    descriptions: z.string().optional(),
 })
