@@ -1,5 +1,5 @@
 {
-  "name": "Ticketpass-Api",
+  "name": "KampusLF-Api",
   "version": "1.0.0",
   "description": "A simple Api built for a Campus lost and found application",
   "main": "index.js",
